@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spare | Quanto ti resta?</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://drndre.github.io/spare/">
+  <!-- Anteprima del link anche per chi condivide ancora il vecchio indirizzo -->
+  <meta property="og:title" content="Spare | Quanto ti resta?">
+  <meta property="og:description" content="Spese del mese, resto in tasca e risparmi: sai sempre quanto ti resta.">
+  <meta property="og:url" content="https://drndre.github.io/spare/">
+  <meta property="og:image" content="https://drndre.github.io/spare/icons/anteprima.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta http-equiv="refresh" content="2; url=https://drndre.github.io/spare/">
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #F2F2F7; color: #1C1C1E;
+           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; text-align: center; padding: 24px; }
+    a { color: #007AFF; font-weight: 600; }
+    @media (prefers-color-scheme: dark) { body { background: #000; color: #fff; } a { color: #0A84FF; } }
+  </style>
+  <script>
+    // Spare si è spostata: tolgo la vecchia versione salvata nel browser e vado al nuovo indirizzo,
+    // tenendo eventuali parametri (es. i link di conferma email) e la scheda aperta.
+    (function () {
+      var nuovo = "https://drndre.github.io/spare/" + location.search + location.hash;
+      function vai() { location.replace(nuovo); }
+      try {
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            return Promise.all(regs.filter(function (r) { return r.scope.indexOf("/gestione-spese/") !== -1; }).map(function (r) { return r.unregister(); }));
+          }).then(function () { return window.caches ? caches.keys().then(function (k) { return Promise.all(k.filter(function (n) { return n.indexOf("conti-") === 0; }).map(function (n) { return caches.delete(n); })); }) : null; })
+            .then(vai, vai);
+          setTimeout(vai, 1500);
+        } else vai();
+      } catch (e) { vai(); }
+    })();
+  </script>
+</head>
+<body>
+  <p>Spare ha un nuovo indirizzo:<br><a href="https://drndre.github.io/spare/">drndre.github.io/spare</a></p>
+</body>
+</html>
